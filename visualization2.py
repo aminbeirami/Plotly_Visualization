@@ -113,19 +113,19 @@ def visualize_snapshots():
 				xref = 'x',
 				yref = 'y',
 				text = labels[i],
-				xanchor = "left",
-		        xshift = 10,
+				xanchor = 'left',
+				xshift = 10,
 				showarrow = False,
 				font = dict(
 					family = 'Arial',
 					size = 19,
 					color = '#ffffff'
 				),
-	            bordercolor='#c7c7c7',
-	            borderwidth=2,
-	            borderpad=4,
-	            bgcolor=colors[i],
-	            opacity=0.8
+				bordercolor='#c7c7c7',
+				borderwidth=2,
+				borderpad=4,
+				bgcolor=colors[i],
+				opacity=0.8
 			)
 		)
 
