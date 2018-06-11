@@ -43,8 +43,7 @@ def query_data():
 		y_data[i].append(read_data(snap_files[i])['second_dim'])
 	return x_data,y_data
 
-def visualize_snapshots():
-	x_data,y_data = snapshots_data()
+def visualization(x_data,y_data):
 	lines_data = []
 	for i in range(len(labels)):
 		lines_data.append(
@@ -143,5 +142,13 @@ def visualize_snapshots():
 	layout['annotations'] = annotations
 	fig = go.Figure(data = lines_data, layout = layout)
 	plot(fig)
+	
+def what_to_visualize(name):
+	items = {
+		'snapshot_timing': snapshots_data,
+		'query_timing' : query_data,
+	}
+	x_data,y_data = items[name]()
+	visualization(x_data,y_data)
 
-visualize_snapshots()
+what_to_visualize('snapshot_timing')
