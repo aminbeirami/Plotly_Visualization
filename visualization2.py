@@ -32,7 +32,7 @@ def snapshots_data():
 	return x_data,y_data
 
 def query_data():
-	snap_files = ['recursive_multiquery.txt','dynamic_multiquery.txt','multisnapCluster_time.txt']
+	snap_files = ['recursive_multiquery_time.txt','dynamic_multiquery_time.txt','multiqueryCluster_time.txt']
 	x_data = []
 	y_data = []
 	for i in range(len(snap_files)):
@@ -125,6 +125,7 @@ def visualization(x_data,y_data):
 				text = labels[i],
 				xanchor = 'left',
 				xshift = 10,
+				yshift = 10
 				showarrow = False,
 				font = dict(
 					family = 'Arial',
@@ -147,8 +148,10 @@ def what_to_visualize(name):
 	items = {
 		'snapshot_timing': snapshots_data,
 		'query_timing' : query_data,
+		'snapshot_costs': multi_snap_cost,
+		'query_cost': multiple_query_cost
 	}
 	x_data,y_data = items[name]()
 	visualization(x_data,y_data)
 
-what_to_visualize('snapshot_timing')
+what_to_visualize('query_timing')
