@@ -64,8 +64,18 @@ def visualize_snapshots():
     	))
 
 	layout = go.Layout(
+		title = 'Cost of Finding Optimal Segmentations for Multiple Snapshots',
+		titlefont = dict(
+			family = 'Arial',
+			size = 20,
+		),
 		xaxis = dict(
-			showline = True,
+			title = 'Number of Snapshots',
+			titlefont = dict(
+				family = 'Arial',
+				size = 20,
+			),
+			showline = False,
 			showgrid = False,
 			showticklabels = True,
 			linecolor = 'rgb(204, 204, 204)',
@@ -74,6 +84,7 @@ def visualize_snapshots():
 			ticks = 'outside',
 			tickcolor = 'rgb(204, 204, 204)',
 			tickwidth = 1,
+			dtick = 5,
 			ticklen = 5,
 			tickfont = dict(
 				family = 'Arial',
