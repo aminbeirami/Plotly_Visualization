@@ -173,23 +173,20 @@ def bar_visualization_dynamic(x_data,y_data):
 
 def bar_visualization_compare(x_data,y_data):
 	tick_data = x_data[0][0][::2]
-	bar0 = go.Bar(
-		x= x_data[0][0][::2],
-		y = y_data[0][0][::2],
-		name = 'dynamic programming',
-		marker = dict(
-			color = 'rgb(55, 83, 109)',
+	data = []
+	names = ['Dynamic Programming','Clustering']
+	bar_color = ['rgb(55, 83, 109)','rgb(26, 118, 100)']
+	for i in range(len(x_data)):
+		data.append(
+			go.Bar(
+				x = x_data[i][0][::2],
+				y = y_data[i][0][::2],
+				name = names[i],
+				marker = dict(
+					color = bar_color[i],
+				)
+			)
 		)
-	)
-	bar1 = go.Bar(
-		x = x_data[1][0][::2],
-		y = y_data[1][0][::2],
-		name = 'Clustering',
-		marker = dict(
-			color = 'rgb(26, 118, 100)',
-		)
-	)
-	data = [bar0,bar1]
 	layout = go.Layout(
 		title = 'Dynamic Programming VS Clustering Overall Cost Comparison',
 		barmode = 'group',
@@ -217,6 +214,7 @@ def bar_visualization_compare(x_data,y_data):
 			borderwidth = 3
 		)
 	)
+
 	fig = go.Figure(data = data, layout = layout)
 	plot(fig)
 
