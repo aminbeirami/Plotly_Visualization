@@ -2,8 +2,8 @@ import plotly.plotly as py
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objs as go
 
-labels = ['Recursive','Dynamic Programming','Clustering']
-colors = ['rgba(67,67,67,1)', 'rgba(115,115,115,1)', 'rgba(49,130,189, 1)']
+labels = ['Dynamic','Clustering']
+colors = ['rgba(67,67,67,1)','rgb(199, 86, 35)' ,'rgba(115,115,115,1)', 'rgba(49,130,189, 1)']
 mode_size = [8, 8, 12, 8]
 
 def read_data(filename):
@@ -174,7 +174,7 @@ def bar_visualization_dynamic(x_data,y_data):
 def bar_visualization_compare(x_data,y_data):
 	tick_data = x_data[0][0][::2]
 	data = []
-	names = ['Dynamic Programming','Clustering']
+	names = ['Clustering 300 iterations','Clustering 5 iterations']
 	bar_color = ['rgb(55, 83, 109)','rgb(26, 118, 100)']
 	for i in range(len(x_data)):
 		data.append(
@@ -188,7 +188,7 @@ def bar_visualization_compare(x_data,y_data):
 			)
 		)
 	layout = go.Layout(
-		title = 'Dynamic Programming VS Clustering Overall Cost Comparison',
+		title = 'Overall cost using clustering for segmentation, in various iterations',
 		barmode = 'group',
 		xaxis = dict(
 			title = 'Number of Snapshots',
@@ -231,7 +231,7 @@ def snapshots_data():
 	line_visualization(x_data,y_data)
 
 def query_data():
-	snap_files = ['recursive_multiquery_time.txt','dynamic_multiquery_time.txt','multiqueryCluster_time.txt']
+	snap_files = ['dynamic_multiquery_time.txt','multiqueryCluster_time.txt']
 	x_data = []
 	y_data = []
 	for i in range(len(snap_files)):
@@ -241,7 +241,17 @@ def query_data():
 		x_data[i].append(read_data(snap_files[i])['first_dim'])
 		y_data[i].append(read_data(snap_files[i])['second_dim'])
 	line_visualization(x_data,y_data)
-	
+
+def runtime():
+	file = ['runtime.txt',]
+	x_data = []
+	y_data = []
+	for i in range(len(file)):
+		x_data.append([])
+		y_data.append([])
+		x_data[i].append(read_data(file[i])['first_dim'])
+		y_data[i].append(read_data(file[i])['second_dim'])
+	line_visualization(x_data,y_data)
 
 def multisnap_dyn_cost():
 	snap_cost_file = 'multisnapDyn.txt'
@@ -262,13 +272,53 @@ def dyn_clust_cost():
 		y_data[i].append(read_data(cost_files[i])['second_dim'][:40])
 	bar_visualization_compare(x_data,y_data)
 
+def query_clustering():
+	names = ['multiqueryCluster_time.txt','multiQueryCluster_poor2.txt']
+	x_data = []
+	y_data = []
+	for i in range(len(names)):
+		x_data.append([])
+		y_data.append([])
+	for j in range(len(names)):
+		x_data[j].append(read_data(names[j])['first_dim'])
+		y_data[j].append(read_data(names[j])['second_dim'])
+	line_visualization(x_data,y_data)
+
+def snapshot_clustering():
+	names = ['multisnapCluster.txt','multisnapCluster_poor.txt']
+	x_data = []
+	y_data = []
+	for i in range(len(names)):
+		x_data.append([])
+		y_data.append([])
+	for j in range(len(names)):
+		x_data[j].append(read_data(names[j])['first_dim'])
+		y_data[j].append(read_data(names[j])['second_dim'])
+	bar_visualization_compare(x_data,y_data)
+
+def snapshot_clustering_time():
+	names = ['multisnapCluster_time.txt','multisnapCluster_time_poor.txt']
+	x_data = []
+	y_data = []
+	for i in range(len(names)):
+		x_data.append([])
+		y_data.append([])
+	for j in range(len(names)):
+		x_data[j].append(read_data(names[j])['first_dim'])
+		y_data[j].append(read_data(names[j])['second_dim'])
+	line_visualization(x_data,y_data)
+
 def what_to_visualize(name):
 	items = {
+		'runtime': runtime,
 		'snapshot_timing': snapshots_data,
 		'query_timing' : query_data,
 		'snapshot_costs': multisnap_dyn_cost,
 		'dynamic_vs_clustering_cost': dyn_clust_cost,
+		'compare_clustering_queries': query_clustering,
+		'compare_clustering_snap_cost': snapshot_clustering,
+		'compare_clustering_snap_time':snapshot_clustering_time
 	}
 	items[name]()
 
-what_to_visualize('dynamic_vs_clustering_cost')
+what_to_visualize('query_timing')
